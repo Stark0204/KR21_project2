@@ -1,4 +1,7 @@
 from typing import Union
+
+import networkx as nx
+
 from BayesNet import BayesNet
 from copy import deepcopy
 
@@ -21,34 +24,46 @@ class BNReasoner:
     # TODO: This is where your methods should go
 
 
-    def d_sep(self, X, Y, Z):
-        copyNet = deepcopy(self.bn)
+    def d_sep(self, start: str, target: str, evidence: list):
+        print("X = ", start, "  Y = ", target, "   Z =", evidence)
+        BN_pruned = self.prune(evidence, dsepmode= True, start=start, target=target)
 
+        intergraph = BN_pruned.get_interaction_graph()
 
-        # Get (shortest) path
-        paths = []
-        paths.append(X)
-        x_child = copyNet.get_children(X)
-        if len(x_child == 0): return True
-
-        if Y in x_child:
+        if nx.has_path(intergraph, start, target):
             return False
-
-        while Y not in paths:
-
-            for child in x_child:
-                path_of_child = []
-                path_of_child.append(child)
-                children = copyNet.get_children(path_of_child)
-                if len(children) > 0:
-                    if Y in children:
-                        path_of_child.append(Y)
-                        paths.append(path_of_child)
-                        break
+        else:
+            return True
 
 
-        for var in Z:
-            check_type()
+
+
+
+
+
+        # # Get (shortest) path
+        # paths = []
+        # paths.append(X)
+        # x_child = copyNet.get_children(X)
+        # if len(x_child == 0): return True
+
+        # if Y in x_child:
+        #     return False
+
+        # while Y not in paths:
+
+        #     for child in x_child:
+        #         path_of_child = []
+        #         path_of_child.append(child)
+        #         children = copyNet.get_children(path_of_child)
+        #         if len(children) > 0:
+        #             if Y in children:
+        #                 path_of_child.append(Y)
+        #                 paths.append(path_of_child)
+        #                 break
+
+
+    
 
     def get_paths(self, start, target, path_so_far):
 
@@ -78,4 +93,86 @@ class BNReasoner:
                     return path_so_far
 
 
+    def prune(self, evidence, dsepmode =False, start = None, target = None):
+        BN_pruned = deepcopy(self.bn)
 
+        # Cut outgoing edges from the evidence Z
+        for i in evidence:
+            trash = BN_pruned.get_children(i)
+
+            for child in trash:
+                edge = [i, child]
+                BN_pruned.del_edge(edge)
+
+            # Cut away the Z itself
+            BN_pruned.del_var(i)
+
+        var = BN_pruned.get_all_variables()
+
+        # Take away every leaf node
+        if dsepmode:
+            for j in var:
+                if len(BN_pruned.get_children(j)) == 0:
+                    if target == j :
+                            print("var equals target")
+                    elif start == j:
+                            print("var equals start")
+                    else:
+                        print("Deleting ", j)
+                        BN_pruned.del_var(j)
+
+        else:
+            for j in var:
+                if len(BN_pruned.get_children(j)) == 0:
+                    print("Deleting ", j)
+                    BN_pruned.del_var(j)
+
+        BN_pruned.draw_structure()
+        return BN_pruned
+
+
+    def order_min_degree(self):
+        vars = self.bn.get_all_variables()
+        edges = dict.fromkeys(vars, 0)
+
+        for var in vars:
+            neighbours = self.bn.get_neighbours(var)
+            for neighbour in neighbours:
+
+                edges[var] += 1
+
+        edges_sorted = dict(sorted(edges.items(), key=lambda item: item[1]))
+        order_min_degree = list(edges_sorted.keys())
+
+        #sorted_values = sorted(edges.values())  # Sort the values
+        #sorted_dict = {}
+        # for i in sorted_values:
+        #     for k in edges.keys():
+        #         if edges[k] == i:
+        #             sorted_dict[k] = edges[k]
+        #             break
+
+        print(edges)
+        print(edges_sorted)
+        print(order_min_degree)
+
+        return(order_min_degree)
+        #print(sorted_dict)
+
+
+def main():
+
+    print('starting MAIN...')
+    test = BNReasoner("testing\lecture_example2.BIFXML" )
+    #test.bn.draw_structure()
+    #print(test.d_sep("O", "I", ["Y", "X"]))
+    test.order_min_degree()
+
+
+
+
+
+
+
+
+main()
