@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+
+<!--Author: Julian Eustatia
+    Bayesian network in XMLBIF v0.3 (BayesNet Interchange Format)
+ -->
+
+<!-- DTD for the XMLBIF 0.3 format -->
+<!DOCTYPE BIF [
+	<!ELEMENT BIF ( NETWORK )*>
+	      <!ATTLIST BIF VERSION CDATA #REQUIRED>
+	<!ELEMENT NETWORK ( NAME, ( PROPERTY | VARIABLE | DEFINITION )* )>
+	<!ELEMENT NAME (#PCDATA)>
+	<!ELEMENT VARIABLE ( NAME, ( OUTCOME |  PROPERTY )* ) >
+	      <!ATTLIST VARIABLE TYPE (nature|decision|utility) "nature">
+	<!ELEMENT OUTCOME (#PCDATA)>
+	<!ELEMENT DEFINITION ( FOR | GIVEN | TABLE | PROPERTY )* >
+	<!ELEMENT FOR (#PCDATA)>
+	<!ELEMENT GIVEN (#PCDATA)>
+	<!ELEMENT TABLE (#PCDATA)>
+	<!ELEMENT PROPERTY (#PCDATA)>
+]>
+
+<BIF VERSION="0.3">
+<NETWORK>
+    <NAME>SmartWatch Alert</NAME>
+
+    <!-- Variables-->
+    <VARIABLE TYPE="nature">
+        <NAME>alert</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>cardiac-event</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>hyperglycemic-event</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>atherosclerosis</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>forgot-insulin</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+     <VARIABLE TYPE="nature">
+        <NAME>diabetes</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>bad-diet</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>high-activity-for-age-and-BMI</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>cognitive-dysfunction</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>age-over-60</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+    <VARIABLE TYPE="nature">
+        <NAME>BMI-over-25</NAME>
+        <OUTCOME>True</OUTCOME>
+        <OUTCOME>False</OUTCOME>
+    </VARIABLE>
+
+    <!-- PCTs -->
+      <DEFINITION>
+        <FOR>alert</FOR>
+        <GIVEN>cardiac-event</GIVEN>
+        <GIVEN>hyperglycemic-event</GIVEN>
+        <TABLE>0.99 0.01 0.02 0.98 0.01 0.99 0.0 1.0</TABLE>
+    </DEFINITION>
+    <DEFINITION>
+        <FOR>hyperglycemic-event</FOR>
+        <GIVEN>forgot-insulin</GIVEN>
+        <GIVEN>cognitive-dysfunction</GIVEN>
+        <TABLE>0.99 0.01 0.95 0.05 0.4 0.6 0.1 0.9</TABLE>
+    </DEFINITION>
+    <DEFINITION>
+        <FOR>cardiac-event</FOR>
+        <GIVEN>high-activity-for-age-and-BMI</GIVEN>
+        <GIVEN>atherosclerosis</GIVEN>
+        <TABLE>0.99 0.01 0.97 0.03 0.95 0.05 0.9 0.1</TABLE>
+    </DEFINITION>
+     <DEFINITION>
+        <FOR>forgot-insulin</FOR>
+        <GIVEN>diabetes</GIVEN>
+        <GIVEN>cognitive-dysfunction</GIVEN>
+        <TABLE>1.0 0.0 1.0 0.0 0.98 0.02 0.8 0.2</TABLE>
+    </DEFINITION>
+     <DEFINITION>
+        <FOR>atherosclerosis</FOR>
+        <GIVEN>diabetes</GIVEN>
+        <GIVEN>age-over-60</GIVEN>
+        <GIVEN>bad-diet</GIVEN>
+        <TABLE>0.99 0.01 0.95 0.05 0.7 0.3 0.4 0.6 0.4 0.6 0.3 0.7 0.2 0.8 0.1 0.9</TABLE>
+    </DEFINITION>
+    <DEFINITION>
+        <FOR>diabetes</FOR>
+        <GIVEN>bad-diet</GIVEN>
+        <GIVEN>age-over-60</GIVEN>
+        <TABLE>0.95 0.05 0.9 0.1 0.85 0.15 0.75 0.25</TABLE>
+    </DEFINITION>
+     <DEFINITION>
+        <FOR>bad-diet</FOR>
+        <GIVEN>BMI-over-25</GIVEN>
+        <GIVEN>cognitive-dysfunction</GIVEN>
+        <TABLE>0.8 0.2 0.9 0.1 0.1 0.9 0.05 0.95</TABLE>
+    </DEFINITION>
+      <DEFINITION>
+        <FOR>high-activity-for-age-and-BMI</FOR>
+        <GIVEN>age-over-60</GIVEN>
+        <GIVEN>BMI-over-25</GIVEN>
+        <TABLE>0.98 0.02 0.95 0.05 0.93 0.07 0.9 0.1</TABLE>
+    </DEFINITION>
+</NETWORK>
+</BIF>
