@@ -83,7 +83,7 @@
     </DEFINITION>
    <DEFINITION>
         <FOR>age-over-60</FOR>
-        <TABLE>0.89 0.11</TABLE>
+        <TABLE>0.88 0.12</TABLE>
     </DEFINITION>
    <DEFINITION>
         <FOR>BMI-over-25</FOR>
