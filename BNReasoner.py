@@ -4,6 +4,7 @@ import networkx as nx
 
 from BayesNet import BayesNet
 from copy import deepcopy
+import matplotlib.pyplot as plt
 
 
 class BNReasoner:
@@ -160,13 +161,69 @@ class BNReasoner:
         #print(sorted_dict)
 
 
+    def order_min_fill(self, return_dict = False):
+        """
+        Method to return the order of min fill
+        Takes in self
+        Output: dict containing the min_fill value per node
+        """
+        intergraph = self.bn.get_interaction_graph()
+        nx.draw(intergraph, with_labels=True)
+        plt.show()
+        vars = intergraph.nodes
+        print('vars = ', vars)
+        min_fill = dict.fromkeys(vars, 0)
+
+        for var in vars:
+            neighbours = list(intergraph.neighbors(var))
+            print('neighbours ', var, ' are ',neighbours)
+            if len(neighbours) <=1:
+                min_fill[var] = 0
+                print('not enough neighbours,min_fill = 0')
+                continue
+
+            checked = []
+            counter = 0
+
+            # iterate over neighbours
+            for neighbour in neighbours:
+
+                # get the list of neighbours FROM THE NEIGHBOUR
+                adj = list(intergraph.neighbors(neighbour))
+
+                # delete the ones not bordering to var
+                copy_neighbours = neighbours
+                for i in copy_neighbours:
+                    if i not in adj and i not in checked and i is not neighbour:
+                        counter+= 1
+
+                checked.append(neighbour)
+            min_fill[var] = counter
+
+        if return_dict: return min_fill
+        x
+        print(min_fill)
+        edges_sorted = dict(sorted(min_fill.items(), key=lambda item: item[1]))
+        order_min_fill = list(edges_sorted.keys())
+           
+        return order_min_fill
+
+
+
+
+
+
 def main():
 
     print('starting MAIN...')
     test = BNReasoner("testing\lecture_example2.BIFXML" )
-    #test.bn.draw_structure()
+    test.bn.draw_structure()
     #print(test.d_sep("O", "I", ["Y", "X"]))
-    test.order_min_degree()
+    print(test.order_min_degree())
+
+
+    print(test.order_min_fill())
+
 
 
 
