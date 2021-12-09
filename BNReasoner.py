@@ -203,7 +203,7 @@ class BNReasoner:
             min_fill[var] = counter
 
         if return_dict: return min_fill
-        
+
         print(min_fill)
         edges_sorted = dict(sorted(min_fill.items(), key=lambda item: item[1]))
         order_min_fill = list(edges_sorted.keys())
@@ -212,7 +212,7 @@ class BNReasoner:
 
 
 
-    def order_min_fill(self):
+    def order_min_fillWHERE_DID_THIS_COME_FROM(self):
 
         bn_copy = deepcopy(self.bn)
         intergraph = bn_copy.get_interaction_graph()
