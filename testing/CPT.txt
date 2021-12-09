@@ -1,15 +1,3 @@
-
-| cardiac-event | hyperglycemic-event | alert     | p    |
-|---------------|---------------------|-----------|------|
-| False         | False               | False     | 0.99 |
-| False         | False               | True      | 0.01 |
-| False         | True                | False     | 0.02 |
-| False         | True                | True      | 0.98 |
-| True          | False               | False     | 0.01 |
-| True          | False               | True      | 0.99 |
-| True          | True                | False     | 0.0  |
-| True          | True                | True      | 1.0  |
-
 | forgot-insulin | bad-diet      | hyperglycemic-event | p    |
 |----------------|---------------|---------------------|------|
 | False          | False         | False               | 0.99 |
