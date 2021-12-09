@@ -20,7 +20,7 @@
 | True                          | True            | False               | 0.9  |
 | True                          | True            | True                | 0.1  |
 
-| diabetes      | cognitive-dysfunction | forgot-insulin   | p    |
+| diabetes      | cognitive-impairment | forgot-insulin   | p    |
 |---------------|-----------------------|------------------|------|
 | False         | False                 | False            | 1.0  |
 | False         | False                 | True             | 0.0  |
@@ -64,7 +64,7 @@
 | True          | True                  | True             | 0.25 |
 
 
-| BMI-over-25   | cognitive-dysfunction | bad-diet         | p    |
+| BMI-over-25   | cognitive-impairment | bad-diet         | p    |
 |---------------|-----------------------|------------------|------|
 | False         | False                 | False            | 0.8  |
 | False         | False                 | True             | 0.2  |
