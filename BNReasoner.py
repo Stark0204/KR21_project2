@@ -203,7 +203,7 @@ class BNReasoner:
             min_fill[var] = counter
 
         if return_dict: return min_fill
-        x
+        
         print(min_fill)
         edges_sorted = dict(sorted(min_fill.items(), key=lambda item: item[1]))
         order_min_fill = list(edges_sorted.keys())
