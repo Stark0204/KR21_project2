@@ -22,7 +22,7 @@
 
 <BIF VERSION="0.3">
 <NETWORK>
-    <NAME>SmartWatch Alert</NAME>
+    <NAME>Medical event predictor</NAME>
 
     <!-- Variables-->
     <VARIABLE TYPE="nature">
