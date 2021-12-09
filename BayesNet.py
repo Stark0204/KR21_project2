@@ -89,23 +89,12 @@ class BayesNet:
         """
         Returns the children of the variable in the graph.
         :param variable: Variable to get the children from
-        :return: List of parents
+        :return: List of children
         """
         return [c for c in self.structure.predecessors(variable)]
 
-    def get_neighbours(self, variable: str) -> List[str]:
-        """
-        Returns the children of the variable in the graph.
-        :param variable: Variable to get the children from
-        :return: List of Neigbours
-        """
-        parents = self.get_parents(variable)
-
-        children = self.get_children(variable)
-
-        neighbours = parents + children
-
-        return neighbours
+    def get_neighbours(self, variable):
+        return self.get_children(variable) + self.get_parents(variable)
 
     def get_cpt(self, variable: str) -> pd.DataFrame:
         """
