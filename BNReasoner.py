@@ -96,6 +96,7 @@ class BNReasoner:
 
     def prune(self, evidence, dsepmode =False, start = None, target = None):
         BN_pruned = deepcopy(self.bn)
+        BN_not_pruned = deepcopy(self.bn)
 
         # Cut outgoing edges from the evidence Z
         for i in evidence:
@@ -128,6 +129,7 @@ class BNReasoner:
                     print("Deleting ", j)
                     BN_pruned.del_var(j)
 
+        BN_not_pruned.draw_structure()
         BN_pruned.draw_structure()
         return BN_pruned
 
@@ -209,6 +211,38 @@ class BNReasoner:
         return order_min_fill
 
 
+
+    def order_min_fill(self):
+
+        bn_copy = deepcopy(self.bn)
+        intergraph = bn_copy.get_interaction_graph()
+        vars = intergraph.nodes()
+
+        print(vars)
+        bn_copy.draw_structure()
+        edges = dict.fromkeys(vars, 0)
+
+        for var in vars:
+            neighbours = bn_copy.get_neighbours(var)
+            #print(neighbours)
+            if neighbours == None:
+                continue
+            else:
+                for neighbour in neighbours:
+                    new_neighbours = neighbours.remove(neighbour)
+                    print(new_neighbours)
+                    if new_neighbours == None:
+                        continue
+                    else:
+                        for end in new_neighbours:
+                            if end in bn_copy.get_neighbours(neighbour):
+                                continue
+                            else:
+                                bn_copy.add_edge([neighbour, end])
+                                edges[var] += 1
+
+        edges_sorted = dict(sorted(edges.items(), key=lambda item: item[1]))
+        order_min_degree = list(edges_sorted.keys())
 
 
 
