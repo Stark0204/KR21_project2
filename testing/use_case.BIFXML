@@ -26,11 +26,6 @@
 
     <!-- Variables-->
     <VARIABLE TYPE="nature">
-        <NAME>alert</NAME>
-        <OUTCOME>True</OUTCOME>
-        <OUTCOME>False</OUTCOME>
-    </VARIABLE>
-    <VARIABLE TYPE="nature">
         <NAME>cardiac-event</NAME>
         <OUTCOME>True</OUTCOME>
         <OUTCOME>False</OUTCOME>
@@ -82,12 +77,18 @@
     </VARIABLE>
 
     <!-- PCTs -->
-      <DEFINITION>
-        <FOR>alert</FOR>
-        <GIVEN>cardiac-event</GIVEN>
-        <GIVEN>hyperglycemic-event</GIVEN>
-        <TABLE>0.99 0.01 0.02 0.98 0.01 0.99 0.0 1.0</TABLE>
+   <DEFINITION>
+        <FOR>cognitive-impairment</FOR>
+        <TABLE>0.96 0.04</TABLE>
     </DEFINITION>
+   <DEFINITION>
+        <FOR>age-over-60</FOR>
+        <TABLE>0.89 0.11</TABLE>
+    </DEFINITION>
+   <DEFINITION>
+        <FOR>bmi-over-25</FOR>
+        <TABLE>0.61 0.39</TABLE>
+    </DEFINITION>   
     <DEFINITION>
         <FOR>hyperglycemic-event</FOR>
         <GIVEN>forgot-insulin</GIVEN>
@@ -122,7 +123,7 @@
      <DEFINITION>
         <FOR>bad-diet</FOR>
         <GIVEN>BMI-over-25</GIVEN>
-        <GIVEN>cognitive-dysfunction</GIVEN>
+        <GIVEN>cognitive-impairment</GIVEN>
         <TABLE>0.8 0.2 0.9 0.1 0.1 0.9 0.05 0.95</TABLE>
     </DEFINITION>
       <DEFINITION>
