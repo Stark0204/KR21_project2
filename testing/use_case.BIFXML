@@ -66,7 +66,7 @@
         <OUTCOME>False</OUTCOME>
     </VARIABLE>
     <VARIABLE TYPE="nature">
-        <NAME>cognitive-dysfunction</NAME>
+        <NAME>cognitive-impairment</NAME>
         <OUTCOME>True</OUTCOME>
         <OUTCOME>False</OUTCOME>
     </VARIABLE>
@@ -91,7 +91,7 @@
     <DEFINITION>
         <FOR>hyperglycemic-event</FOR>
         <GIVEN>forgot-insulin</GIVEN>
-        <GIVEN>cognitive-dysfunction</GIVEN>
+        <GIVEN>cognitive-impairment</GIVEN>
         <TABLE>0.99 0.01 0.95 0.05 0.4 0.6 0.1 0.9</TABLE>
     </DEFINITION>
     <DEFINITION>
@@ -103,7 +103,7 @@
      <DEFINITION>
         <FOR>forgot-insulin</FOR>
         <GIVEN>diabetes</GIVEN>
-        <GIVEN>cognitive-dysfunction</GIVEN>
+        <GIVEN>cognitive-impairment</GIVEN>
         <TABLE>1.0 0.0 1.0 0.0 0.98 0.02 0.8 0.2</TABLE>
     </DEFINITION>
      <DEFINITION>
