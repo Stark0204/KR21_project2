@@ -24,7 +24,7 @@ class BNReasoner:
 	def mpe(self,Q,E):
 		
 		cpt = self.marginalise(Q,E)
-		print(cpt[cpt.p == cpt.p.max()],'butt')
+		print(cpt[cpt.p == cpt.p.max()])
 
 	def marginalise(self, Q, E):
 			
